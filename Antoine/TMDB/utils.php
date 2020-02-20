@@ -3,50 +3,71 @@
 require_once("../../tp3-helpers.php");
 
 /**
-* TMDB query function
-* @param string $urlcomponent (after the prefix)
-* @param array (associative) GET parameters (ex. ['language' => 'fr'])
-* @return string $content
+* renvoie un film
+* @param int $id du film
+* @param string $lang : fr/en/ru ...
+* @return Array $film_JSON : parsing du JSON d'un film dans une array
 **/
-
 function getFilm($id,$lang) {
-
   $url = "movie/".$id;
   $params = ['language' => $lang];
-
   $film_strJSON = tmdbget($url,$params);
   $film_JSON = json_decode($film_strJSON, true); //Nota: false -> renvoie un Objet / true -> renvoie tableau associatif
   return $film_JSON;
 }
 
+/**
+* Affiche sur le Web un film
+* @param Array $film : contient les datas d'un film.
+**/
 function afficherFilm($film) {
 
-
-  if (!isset($film["id"])) {
-    printf("<p>ID Invalide.</p>");
+  if (!isset($film["id"])) { //si id de film non défini
+    printf("<p class=\"error\">Identifiant Invalide.</p>");
   } else {
+
+    //récupération des données
     $title = $film["title"];
     $original_title = $film["original_title"];
-    $tagline = $film["tagline"]; //si elle existe
+    $tagline = $film["tagline"];
     $desc = $film["overview"];
     $linkTMDB = $film["homepage"];
     $title_format_link = str_replace("-"," ",$title);
     $linkTMDB= "https://www.themoviedb.org/movie/".$film["id"]."-".$title_format_link;
-    printf("<h3> Informations sur le film d'ID : ".$film["id"]."</h3>");
 
-    printf("<p> Titre du Film : ".$title."<p>");
-    printf("<p> Titre du Film Original : ".$original_title."<p>");
+    printf("<h1>Affichage Film</h1>");
+    //Affichage du Titre
+    afficherData($title,"Titre du Film");
+    //Affichage du Titre Original
+    afficherData($original_title,"Titre du Film Original");
+    printf("<hr>");
+    //Affichage du slogan du film
     if ( !empty($tagline)){
-      printf("<p> Slogan : ".$tagline."<p>");
+      afficherData($tagline,"Slogan");
     } else {
-      printf("<p> Tagline non existante<p>");
+      printf("<p class=\"error\"> Ce film ne possède pas de slogan.</p>");
     }
-    printf("<p> Description du Film :".$desc."<p>");
+    printf("<hr>");
+    //Affichage de la description du film
+    afficherData($desc,"Description du film");
 
-    printf("<p>Lien du film sur TMDB : ");
+    printf("<p><strong>Lien du film sur TMDB : ");
     printf("<a href=\"$linkTMDB\">".$title."</a>");
-    printf("</p>");
+    printf("</strong></p>");
   }
 }
 
+/**
+* Affiche une donnée sur la page Web
+* @param string $data
+* @param string $label : intitulé du texte à afficher (correspondant à data).
+**/
+function afficherData($data,$label) {
+  printf("<div class=\"quote\">");
+  printf("<blockquote>");
+  printf("<p>".$data."</p>");
+  printf("<cite>".$label."</cite>");
+  printf("</blockquote>");
+  printf("</div>");
+}
 ?>
