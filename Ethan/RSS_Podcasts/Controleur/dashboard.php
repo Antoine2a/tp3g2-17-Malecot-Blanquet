@@ -85,7 +85,7 @@ function displayPodcasts($rss){
 	function displayPodcasts_hebdo($rss){
 
 		//Header Line
-		printf("<tr class=\"header blue\"><th>Semaine</th><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>");
+		printf("<tr class=\"header blue\"><th>Semaine</th><th>Vendredi</th><th>Jeudi</th><th>Mercredi</th><th>Mardi</th><th>Lundi</th></tr>");
 
 		//Content - Each line correspond to a podcast
 	  //$rss_array = array_reverse(toArray($rss["xml"]));
@@ -102,11 +102,20 @@ function displayPodcasts($rss){
 	    $jour = date('w', (int) $item->timestamp);
 
 		  $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
-	    if ($num_glob=="Semaine numéro : "."00"){
+	    if ($num_glob=="Semaine numéro : "."00"){					//initialisation lors de la première boulce
 	      printf("<tr>");
 	      printf("<td>".$num_sem."</td>");
 	      printf("<td>");
 	      printf("Date : ".$date."<br><br>");
+				if ($jour ==  1) {																//déplacement de cases pour bien placé le premier élément reçu en fonction du jour de la semaine
+					printf("<td></td><td></td><td></td><td></td>");
+				} else if ($jour == 2) {
+					printf("<td></td><td></td><td></td>");
+				} else if ($jour == 3) {
+					printf("<td></td><td></td>");
+				} else if ($jour == 4) {
+					printf("<td></td>");
+				}
 	      $num_glob = $num_sem;
 	      $date_glob = $date;
 	    }
