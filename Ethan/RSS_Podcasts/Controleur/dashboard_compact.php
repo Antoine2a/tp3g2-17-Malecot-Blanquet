@@ -39,35 +39,42 @@ function getRSS($url) {
 function displayPodcasts($rss){
 
 	//Header Line
-	printf("<tr class=\"header blue\"><th>Vendredi</th><th>Jeudi</th><th>Mercredi</th><th>Mardi</th><th>Lundi</th></tr>");
+	printf("<tr class=\"header blue\"><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>");
 
 	//Content - Each line correspond to a podcast
-
+  //$rss_array = array_reverse(toArray($rss["xml"]));
 	$num_glob = "Semaine numéro : "."00";
   $date_glob = "0";
-  printf("<tr>");
-  printf("<td>");
 	foreach ($rss->item as $item) {
 
 		// $date = htmlspecialchars($item->pubDate);
-		$date = date('j.n.Y H:i', (int) $item->timestamp);
+		$time = date('H:i', (int) $item->timestamp);
 		$title = htmlspecialchars($item->title);
 		// $mp3 = "temp";
-    $date_red = date('j.n.Y', (int) $item->timestamp);
+    $date = date('j.n.Y', (int) $item->timestamp);
 		$mp3 = $item->enclosure->attributes();
+    $jour = date('w', (int) $item->timestamp);
 
 	  $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
+    if ($num_glob=="Semaine numéro : "."00"){
+      printf("<tr>");
+      printf("<td>");
+      printf("Date : ".$date."<br><br>");
+      $num_glob = $num_sem;
+      $date_glob = $date;
+    }
     if ($num_glob!=$num_sem){
       printf("</tr>");
       printf("<tr>");
       $num_glob = $num_sem;
     }
-    if ($date_glob!=$date_red){
+    if ($date_glob!=$date){
       printf("</td>");
       printf("<td>");
-      $date_glob =$date_red;
+      printf("Date : ".$date."<br><br>");
+      $date_glob =$date;
     }
-    printf("Date : ".$date."<br>"."Titre : ".$title."<br>"."<audio controls src=".$mp3."></audio>"."<br><br><br>");
+    printf("Heure : ".$time."<br>"."Titre : ".$title."<br>"."<audio controls src=".$mp3."></audio>"."<br><br><br>");
 	}
 
 	// //Header Line
