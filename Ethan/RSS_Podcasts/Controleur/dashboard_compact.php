@@ -39,46 +39,35 @@ function getRSS($url) {
 function displayPodcasts($rss){
 
 	//Header Line
-	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>");
+	printf("<tr class=\"header blue\"><th>Vendredi</th><th>Jeudi</th><th>Mercredi</th><th>Mardi</th><th>Lundi</th></tr>");
 
 	//Content - Each line correspond to a podcast
 
 	$num_glob = "Semaine numéro : "."00";
+  $date_glob = "0";
+  printf("<tr>");
+  printf("<td>");
 	foreach ($rss->item as $item) {
 
 		// $date = htmlspecialchars($item->pubDate);
 		$date = date('j.n.Y H:i', (int) $item->timestamp);
 		$title = htmlspecialchars($item->title);
 		// $mp3 = "temp";
+    $date_red = date('j.n.Y', (int) $item->timestamp);
 		$mp3 = $item->enclosure->attributes();
-		// <audio
-		// controls
-		// src="/media/examples/t-rex-roar.mp3">
-		// 		Your browser does not support the
-		// 		<code>audio</code> element.
-	 // </audio>
-	 // $duration = $item->itunes->getNamespaces(true)["author"];
 
-	 // BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
-	 // https://www.sitepoint.com/parsing-xml-with-simplexml/
-	 $namespacces = $item->getNamespaces(true);
-	 $itunes = $item[0]->children($namespacces["itunes"]);
-	 $duration = $itunes->duration;
-	 $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
-	 if ($num_glob!=$num_sem){
-			printf("<tr>");
-	 		printf("<td colspan=\"5\">".$num_sem."</td>");
-	 		printf("</tr>");
-			$num_glob = $num_sem;
-	 }
-		printf("<tr>");
-		printf("<td>".$date."</td>");
-		printf("<td>".$title."</td>");
-		//printf("<td>".$mp3."</td>");
-		printf("<td><audio controls src=".$mp3."></audio></td>");
-		printf("<td>".$duration."</td>");
-		printf("<td><a href=\"$mp3\">Download</a></td>"); // dst-ce un lien de download ?
-		printf("</tr>");
+	  $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
+    if ($num_glob!=$num_sem){
+      printf("</tr>");
+      printf("<tr>");
+      $num_glob = $num_sem;
+    }
+    if ($date_glob!=$date_red){
+      printf("</td>");
+      printf("<td>");
+      $date_glob =$date_red;
+    }
+    printf("Date : ".$date."<br>"."Titre : ".$title."<br>"."<audio controls src=".$mp3."></audio>"."<br><br><br>");
 	}
 
 	// //Header Line
