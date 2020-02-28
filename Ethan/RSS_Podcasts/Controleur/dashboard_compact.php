@@ -39,7 +39,7 @@ function getRSS($url) {
 function displayPodcasts($rss){
 
 	//Header Line
-	printf("<tr class=\"header blue\"><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>");
+	printf("<tr class=\"header blue\"><th>Semaine</th><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>");
 
 	//Content - Each line correspond to a podcast
   //$rss_array = array_reverse(toArray($rss["xml"]));
@@ -58,6 +58,7 @@ function displayPodcasts($rss){
 	  $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
     if ($num_glob=="Semaine numéro : "."00"){
       printf("<tr>");
+      printf("<td>".$num_sem."</td>");
       printf("<td>");
       printf("Date : ".$date."<br><br>");
       $num_glob = $num_sem;
@@ -66,6 +67,7 @@ function displayPodcasts($rss){
     if ($num_glob!=$num_sem){
       printf("</tr>");
       printf("<tr>");
+      printf("<td>".$num_sem."</td>");      
       $num_glob = $num_sem;
     }
     if ($date_glob!=$date){
