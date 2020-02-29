@@ -75,7 +75,7 @@ function displayPodcasts($rss){
 		printf("<td>".$date."</td>");
 		printf("<td>".$title."</td>");
 		//printf("<td>".$mp3."</td>");
-		printf("<td><audio controls src=".$mp3."></audio></td>");
+		printf("<td><audio controls='controls' preload='none' src=".$mp3."></audio></td>");
 		printf("<td>".$duration."</td>");
 		printf("<td><a href=\"$mp3\" download=\"Podcast\">Download</a></td>"); // dst-ce un lien de download ?
 		printf("</tr>");
@@ -85,14 +85,18 @@ function displayPodcasts($rss){
 	function displayPodcasts_hebdo($rss){
 
 		//Header Line
-		printf("<tr class=\"header blue\"><th>Semaine</th><th>Vendredi</th><th>Jeudi</th><th>Mercredi</th><th>Mardi</th><th>Lundi</th></tr>");
+		printf("<tr class=\"header blue\"><th>Semaine</th><th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th></tr>");
 
 		//Content - Each line correspond to a podcast
 	  //$rss_array = array_reverse(toArray($rss["xml"]));
 		$num_glob = "Semaine numéro : "."00";
 	  $date_glob = "0";
-		foreach ($rss->item as $item) {
+		$tab_rss = array();
 
+		foreach ($rss->item as $item) {
+			array_unshift($tab_rss, $item);
+		}
+		foreach ($tab_rss as $item) {
 			// $date = htmlspecialchars($item->pubDate);
 			$time = date('H:i', (int) $item->timestamp);
 			$title = htmlspecialchars($item->title);
@@ -102,23 +106,24 @@ function displayPodcasts($rss){
 	    $jour = date('w', (int) $item->timestamp);
 
 		  $num_sem = "Semaine numéro : ".date('W', (int) $item->timestamp);
-	    if ($num_glob=="Semaine numéro : "."00"){					//initialisation lors de la première boulce
+	   	if ($num_glob=="Semaine numéro : "."00"){					//initialisation lors de la première boulce
 	      printf("<tr>");
 	      printf("<td>".$num_sem."</td>");
-	      printf("<td>");
-	      printf("Date : ".$date."<br><br>");
-				if ($jour ==  1) {																//déplacement de cases pour bien placé le premier élément reçu en fonction du jour de la semaine
+				if ($jour ==  5) {																//déplacement de cases pour bien placé le premier élément reçu en fonction du jour de la semaine
 					printf("<td></td><td></td><td></td><td></td>");
-				} else if ($jour == 2) {
+				} else if ($jour == 4) {
 					printf("<td></td><td></td><td></td>");
 				} else if ($jour == 3) {
 					printf("<td></td><td></td>");
-				} else if ($jour == 4) {
+				} else if ($jour == 2) {
 					printf("<td></td>");
 				}
+				printf("<td>");
+				printf("Date : ".$date."<br><br>");
 	      $num_glob = $num_sem;
 	      $date_glob = $date;
 	    }
+
 	    if ($num_glob!=$num_sem){
 	      printf("</tr>");
 	      printf("<tr>");
@@ -131,9 +136,8 @@ function displayPodcasts($rss){
 	      printf("Date : ".$date."<br><br>");
 	      $date_glob =$date;
 	    }
-	    printf("Heure : ".$time."<br>"."Titre : ".$title."<br>"."<audio controls src=".$mp3."></audio>"."<br><br><br>");
+	    printf("Heure : ".$time."<br>"."Titre : ".$title."<br>"."<audio controls='controls' preload='none' src=".$mp3."></audio>"."<br><br><br>");
 		}
-
 	}
 
 	function displayPodcasts_multi($rss1,$rss2,$rss3) {

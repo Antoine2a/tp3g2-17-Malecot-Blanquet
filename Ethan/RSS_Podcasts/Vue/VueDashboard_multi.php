@@ -16,11 +16,11 @@
     // require_once("/home/blanquan/popos5/Tronc_Info/PW/tp3g2-17-Malecot-Blanquet/Antoine/RSS_Podcasts/Controleur/dashboard.php");
     $url1 = "http://radiofrance-podcast.net/podcast09/rss_14312.xml";
     $url2 = "http://radiofrance-podcast.net/podcast09/rss_14310.xml";
-    //$url3 = "http://radiofrance-podcast.net/podcast09/rss_14311.xml";
+    $url3 = "http://radiofrance-podcast.net/podcast09/rss_14311.xml";
     $rss1 = getRSS($url1);
     $rss2 = getRSS($url2);
-    //$rss3 = getRSS($url3);
-    //displayPodcasts_multi($rss1,$rss2,$rss3);
+    $rss3 = getRSS($url3);
+    displayPodcasts_multi($rss1,$rss2,$rss3);
     ?>
 
   </table>
