@@ -77,7 +77,7 @@ function displayPodcasts($rss){
 		//printf("<td>".$mp3."</td>");
 		printf("<td><audio controls src=".$mp3."></audio></td>");
 		printf("<td>".$duration."</td>");
-		printf("<td><a href=\"$mp3\">Download</a></td>"); // dst-ce un lien de download ?
+		printf("<td><a href=\"$mp3\" download=\"Podcast\">Download</a></td>"); // dst-ce un lien de download ?
 		printf("</tr>");
 	}
 }
@@ -133,6 +133,13 @@ function displayPodcasts($rss){
 	    }
 	    printf("Heure : ".$time."<br>"."Titre : ".$title."<br>"."<audio controls src=".$mp3."></audio>"."<br><br><br>");
 		}
+
+	}
+
+	function displayPodcasts_multi($rss1,$rss2,$rss3) {
+		//Header Line
+		printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>");
+		$max = max(array (count($rss1->item), count($rss2->item), count($rss3->item)));
 
 	}
 
