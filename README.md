@@ -50,3 +50,28 @@ Non implémenté : Choix du sujet d'approfondissement sur les **RSS_Podcasts**.
 ### 1. Mise en jambes
 
 ###### 1. Tableau des podcasts
+
+
+###### 2. Intercalaire Hebdomadaire
+
+Pour cette question, nous avons récupéré dans une variable le numéro de la semaine grace à fonction "date" de PHP qui avec l'argument 'W' rend le numéro de semaine. Puis nous avons ajouté une condition pour afficher sur une ligne la case de numéro de semaine seulement lorsque l'on change de semaine par rapport au dernier enregistrement audio traité (la commande colspan nous a permis de faire une seule case sur toute la ligne).
+
+###### 3. Tableau Hebdomadaire
+
+Afin d'obtenir un affichage Hebdomadaire nous avons commencé par inverser l'ordre d'arriver des élémentsdu flux rss, qui arrivait du plus récent au plus ancient, afin d'avoir la enregistrement audio dans l'ordre des jours de la semaine et non dans l'ordre inverse. Ensuite nous avons aussi ajouté une initialisation dans la boucle foreach pour placer correctement le premier enregistrement au jour correspondant et ainsi que tous les enregistrement après celui-ci soient directement bien placé sans avoir besoin de faire de calculs. Enfin, nous avons une condition sur la jour et une condition sur la semaine qui définissent si l'on passe à la case suivante et si l'on passe à la ligne suivante respectivement.
+
+###### 4.
+
+
+###### 5. Attribut du MP3
+
+Le bitrate standart du podcast est 128 kbps et il est en stereo (une impression d'écran correspondant au commandant effectuée dans la console est jointe). Ces informations sont données en utilisant mp3info avec -x.
+
+###### 6. Réencodage
+
+En utilisant lame les deux commandes pour faire le réencodage demandé sont :
+-> -b 32 pour obtenir les 32 kbps demandés
+-> -m mode=m pour obtenir le mode mono au lieu de stereo
+Une impression d'ecran est jointe ainsi que les fichiers mp3 avant et après réencodage (14312-28.02.2020-ITEMA_22294516-1.mp3 (avant) et 14312-28.02.2020-ITEMA_22294516-1.mp3.mp3 (après)).
+
+###### 7.
