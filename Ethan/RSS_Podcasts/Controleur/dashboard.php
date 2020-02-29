@@ -93,9 +93,10 @@ function displayPodcasts($rss){
 	  $date_glob = "0";
 		$tab_rss = array();
 
-		foreach ($rss->item as $item) {
+		foreach ($rss->item as $item) {										//inversion du flux rss pour obtenir les podcasts dans l'ordre de la semaine de lundi à vendredi
 			array_unshift($tab_rss, $item);
 		}
+		array_shift($tab_rss);  													//élimination de la courte vidéo présentant le site de radiofrance
 		foreach ($tab_rss as $item) {
 			// $date = htmlspecialchars($item->pubDate);
 			$time = date('H:i', (int) $item->timestamp);
@@ -124,13 +125,13 @@ function displayPodcasts($rss){
 	      $date_glob = $date;
 	    }
 
-	    if ($num_glob!=$num_sem){
+	    if ($num_glob!=$num_sem){															//changement de ligne car semaine différente
 	      printf("</tr>");
 	      printf("<tr>");
 	      printf("<td>".$num_sem."</td>");
 	      $num_glob = $num_sem;
 	    }
-	    if ($date_glob!=$date){
+	    if ($date_glob!=$date){																//changement de case car jour différent
 	      printf("</td>");
 	      printf("<td>");
 	      printf("Date : ".$date."<br><br>");
