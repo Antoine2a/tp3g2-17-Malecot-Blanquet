@@ -1,8 +1,27 @@
 # tp3g2-17-Malecot-Blanquet
 
 Malecot Ethan - Blanquet Antoine
+
 # TP3 - TMDB & Podcasts
 
+Quick Start
+===
+
+**Q:** Comment tester notre projet ?
+
+**A:** Clonez-le et executez les fichiers php suivants :
+
+  * TMDB : `/TMDB/film.php`
+
+  + RSS_Podcasts:
+    * Tableaux des Podcasts : `/RSS_Podcasts/Vue/vueDashboard.php` (Liens Twitter en appuyant sur `Charger Ressources Twitter`)
+
+    * Tableaux des Podcasts - Vue Hebdomadaire : `/RSS_Podcasts/Vue/vueDashboardHebdo.php`
+    * Tableaux des Podcasts - Fusion de plusieurs Podcasts : `/RSS_Podcasts/Vue/vueDashboardMulti.php`
+
+:warning: Le répértoire `/old_versions` contient nos versions de dev du TP. Afin de progresser en PHP, nous avons décider de réaliser la majeur partie des questions de notre coté pour ensuite sélectionner les implémentations les plus cohérente dans les répertoires `/TMDB` et `/RSS_Podcasts`
+
+---
 
 ## Partie 1 - Utilisation de The Movie Database
 ### 1. Mise en jambes
