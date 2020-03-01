@@ -51,7 +51,11 @@ function displayPodcasts($RSS_list, $loadLinksTwitter) {
 
 	*/
 	//Header Line
-	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th><th>Sources Twitter (via DOM)</th></tr>"); echo "\n\t";
+	if ($loadLinksTwitter) {
+		printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th><th>Sources Twitter (via DOM)</th></tr>"); echo "\n\t";
+	} else {
+		printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>"); echo "\n\t";
+	}
 
   $item_list = array();
 	//1. Insérer TOUS les items de chacuns des podcasts dans une même array.
@@ -96,10 +100,12 @@ function displayPodcasts($RSS_list, $loadLinksTwitter) {
 		printf("<td><audio controls preload='none' src=".$mp3."></audio></td>");	echo "\n\t\t";
 		printf("<td>".$duration."</td>");	echo "\n\t\t";
 		printf("<td><a href=\"$mp3\" download=\"Koala\">Download</a></td>");	echo "\n\t\t";
-		if ( !empty($link_twitter)){
-			echo("<td><a href=\"".$link_twitter."\">Lien Twitter</a></td>");	echo "\n\t";
-		} else {
-			printf("<td class=\"error\">Inexistant</td>");	echo "\n\t";
+		if ($loadLinksTwitter) {
+			if ( !empty($link_twitter)){
+				echo("<td><a href=\"".$link_twitter."\">Lien Twitter</a></td>");	echo "\n\t";
+			} else {
+				printf("<td class=\"error\">Inexistant</td>");	echo "\n\t";
+			}
 		}
 		printf("</tr>");	echo "\n\t";
 	}

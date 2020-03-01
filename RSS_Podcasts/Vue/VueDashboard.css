@@ -33,16 +33,17 @@ h1{
 
 form{
   text-align: center;
-  width: 400px;
+  /* width: 400px; */
   display: flex;
-  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
 }
 
 label{
   display: block;
   font-size: 150px;
   padding: 0;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 0px 10px 0px;
   text-transform: uppercase;
   font-size:x-large;
   font-weight: bold;
@@ -51,7 +52,7 @@ label{
 }
 
 input[type=submit] {
-  width: 100%;
+  width: 400px;
   background-color: #ff9933;
   color: white;
   padding: 14px 20px;
@@ -63,6 +64,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #ffb366;
+  width: 400px;
 }
 
 .week{

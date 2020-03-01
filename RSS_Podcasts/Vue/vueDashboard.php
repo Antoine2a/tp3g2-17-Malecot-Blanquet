@@ -20,6 +20,7 @@
     </select>
     <input type="submit" name="Valider Affichage"/><br><br>
   </form>
+  <hr>
 
   <div class="wrapper">
     <table>
