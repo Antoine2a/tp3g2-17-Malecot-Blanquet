@@ -2,6 +2,7 @@
 
 require_once('../vendor/dg/rss-php/src/Feed.php');
 require_once("../../simplehtmldom_1_9_1/simple_html_dom.php");
+// require_once("../../getID3-master/demos/demo.browse.php");
 
 /**
 * Initialisation et Récupération du fichier au format RSS
@@ -39,8 +40,10 @@ function date_sort_modif($d1, $d2) {
 /**
 * Affichage des émissions d'un ou plusieurs podcasts
 * @param array $RSS_list -> liste d'objets @param Feed -> contenu d'un podcast (rss)
+* @param boolean $loadLinksTwitter -> vrai : on récupère au travers d'un DOM, les liens des Threads Twitter (quelques secondes de chargements);
+* 																		faux : chargement des podcasts sans liens Twitter (aucuns lag)
 **/
-function displayPodcasts($RSS_list) {
+function displayPodcasts($RSS_list, $loadLinksTwitter) {
 	/*
 	Idée d'implémentation : 1. Insérer TOUS les items de chacuns des podcasts dans une même array.
 													2. Trier cette liste en fonction de la date de publication du podcast
@@ -69,7 +72,9 @@ function displayPodcasts($RSS_list) {
 		$title = htmlspecialchars($item->title);
 		$enclosure = $item->enclosure->attributes();
 		$mp3 = $enclosure['url']; //récupération de l'attribut "url"
-		// $link_twitter = getTwitterLink($item->link);
+		if ($loadLinksTwitter) {
+			$link_twitter = getTwitterLink($item->link);
+		}
 
 		// BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
 		// https://www.sitepoint.com/parsing-xml-with-simplexml/
@@ -101,7 +106,8 @@ function displayPodcasts($RSS_list) {
 }
 
 /**
-* Récupère le DOM d'une page Web
+* Récupère le lien twitter de la page d'un podcast en fonction de son url
+* Le lien est renvoyé uniquement si un Thread Twitter est crée pour le podcast sur la page web
 * @param string $url -> url de l'article scientifique en question
 * @return string $link -> lien twitter
 **/
