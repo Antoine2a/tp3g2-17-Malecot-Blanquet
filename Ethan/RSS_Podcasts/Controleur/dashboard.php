@@ -93,10 +93,10 @@ function displayPodcasts($rss){
 	  $date_glob = "0";
 		$tab_rss = array();
 
-		foreach ($rss->item as $item) {										//inversion du flux rss pour obtenir les podcasts dans l'ordre de la semaine de lundi à vendredi
+		foreach ($rss->item as $item) {										//inversion du flux rss pour obtenir les audios dans l'ordre de la semaine de lundi à vendredi
 			array_unshift($tab_rss, $item);
 		}
-		array_shift($tab_rss);  													//élimination de la courte vidéo présentant le site de radiofrance
+		array_shift($tab_rss);  													//élimination du court audio présentant le site de radiofrance
 		foreach ($tab_rss as $item) {
 			// $date = htmlspecialchars($item->pubDate);
 			$time = date('H:i', (int) $item->timestamp);
@@ -143,8 +143,35 @@ function displayPodcasts($rss){
 
 	function displayPodcasts_multi($rss1,$rss2,$rss3) {
 		//Header Line
-		printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>");
+		printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th><th>Sources</th></tr>");
 		$max = max(array (count($rss1->item), count($rss2->item), count($rss3->item)));
+
+		for ($i=0; $i < $max ; $i++) {
+			if($i<=count($rss1->item)-1) {													//est ce que la fin du rss1 est atteinte
+				$jour1 = date('j', (int) $rss1->item[i]->timestamp);
+				$heure1 = date('G', (int) $rss1->item[i]->timestamp);
+				$minute1 = date('i', (int) $rss1->item[i]->timestamp);
+				$annee1 = date('Y', (int) $rss1->item[i]->timestamp);
+				$mois1 = date('m', (int) $rss1->item[i]->timestamp);
+			}
+			if($i<=count($rss2->item)-1) {													
+				$jour2 = date('j', (int) $rss2->item[i]->timestamp);
+				$heure2 = date('G', (int) $rss2->item[i]->timestamp);
+				$minute2 = date('i', (int) $rss2->item[i]->timestamp);
+				$annee2 = date('Y', (int) $rss2->item[i]->timestamp);
+				$mois2 = date('m', (int) $rss2->item[i]->timestamp);
+			}
+			if($i<=count($rss3->item)-1) {
+				$jour3 = date('j', (int) $rss3->item[i]->timestamp);
+				$heure3 = date('G', (int) $rss3->item[i]->timestamp);
+				$minute3 = date('i', (int) $rss3->item[i]->timestamp);
+				$annee3 = date('Y', (int) $rss3->item[i]->timestamp);
+				$mois3 = date('m', (int) $rss3->item[i]->timestamp);
+			}
+
+
+
+		}
 
 	}
 
