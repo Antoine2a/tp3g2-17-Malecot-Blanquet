@@ -1,6 +1,6 @@
 <?php
 
-require_once("../../tp3-helpers.php");
+require_once("../tp3-helpers.php");
 
 /**
 * renvoie un film

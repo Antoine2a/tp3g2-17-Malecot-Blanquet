@@ -1,6 +1,7 @@
 <?php
 
 require_once('../vendor/dg/rss-php/src/Feed.php');
+require_once("../../simplehtmldom_1_9_1/simple_html_dom.php");
 
 /**
 * Initialisation et Récupération du fichier au format RSS
@@ -28,48 +29,38 @@ function testMp3($mp3){
 
 }
 
-function displayPodcastsMulti($rss1,$rss2,$rss3) {
+//Fonction de comparaison pour des dates
+function date_sort_modif($d1, $d2) {
+	$date1 = date('j.n.Y H:i', (int) $d1->timestamp); //On récupère la date de publication de l'item
+	$date2 = date('j.n.Y H:i', (int) $d2->timestamp);
+  return strtotime($date2) - strtotime($date1);
+}
+
+/**
+* Affichage des émissions d'un ou plusieurs podcasts
+* @param array $RSS_list -> liste d'objets @param Feed -> contenu d'un podcast (rss)
+**/
+function displayPodcasts($RSS_list) {
+	/*
+	Idée d'implémentation : 1. Insérer TOUS les items de chacuns des podcasts dans une même array.
+													2. Trier cette liste en fonction de la date de publication du podcast
+													3. Afficher les podcasts, un par un avec l'item courant. (le podcast courant)
+
+	*/
 	//Header Line
-	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>");
-
-	$RSS_list = array($rss1,$rss2,$rss3); //fusion des objets RSS
-	// $RSS_list = array($rss1); //fusion des objets RSS
-
-
-
-	//L'idée c'est : mettre tous les "items" dans une array
-	//Et trier sur la date de publication
-
+	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th><th>Sources Twitter (via DOM)</th></tr>"); echo "\n\t";
 
   $item_list = array();
-	$item_list_pubDate = array();
-
+	//1. Insérer TOUS les items de chacuns des podcasts dans une même array.
 	foreach ($RSS_list as $rss) {
 		foreach ($rss->item as $item) {
 			array_push($item_list, $item);
 		}
 	}
-	// var_dump($item_list);
-
-
-	foreach ($item_list as $item) {
-		array_push($item_list_pubDate,date('j.n.Y H:i', (int) $item->timestamp));
-	}
-
-
-	//trier toutes les dates
-	// usort($item_list_pubDate, "date_sort");
-
+	//2. Trier cette liste en fonction de la date de publication du podcast
 	usort($item_list, "date_sort_modif");
 
-
-	//trier nos items en fonction des dates triées
-	// array_multisort($item_list,$item_list_pubDate);
-
-	// displayPodcasts($rss1);
-	// var_dump($item_list);
-
-
+	///3. Afficher les podcasts, un par un avec l'item courant. (le podcast courant)
 	$num_current_week = "Semaine numéro : "."00";//Initialisation numéro de la semaine
 	//Content - Each line correspond to a podcast
 	foreach ($item_list as $item) {
@@ -78,9 +69,7 @@ function displayPodcastsMulti($rss1,$rss2,$rss3) {
 		$title = htmlspecialchars($item->title);
 		$enclosure = $item->enclosure->attributes();
 		$mp3 = $enclosure['url']; //récupération de l'attribut "url"
-		// $link_twitter = getTwitter($item->link);
-
-		testMp3($mp3);
+		// $link_twitter = getTwitterLink($item->link);
 
 		// BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
 		// https://www.sitepoint.com/parsing-xml-with-simplexml/
@@ -102,32 +91,15 @@ function displayPodcastsMulti($rss1,$rss2,$rss3) {
 		printf("<td><audio controls preload='none' src=".$mp3."></audio></td>");	echo "\n\t\t";
 		printf("<td>".$duration."</td>");	echo "\n\t\t";
 		printf("<td><a href=\"$mp3\" download=\"Koala\">Download</a></td>");	echo "\n\t\t";
+		if ( !empty($link_twitter)){
+			echo("<td><a href=\"".$link_twitter."\">Lien Twitter</a></td>");	echo "\n\t";
+		} else {
+			printf("<td class=\"error\">Inexistant</td>");	echo "\n\t";
+		}
 		printf("</tr>");	echo "\n\t";
 	}
-
-
-
-
 }
 
-function date_sort_modif($d1, $d2) {
-
-	$date1 = date('j.n.Y H:i', (int) $d1->timestamp);
-	$date2 = date('j.n.Y H:i', (int) $d2->timestamp);
-
-	// var_dump($ais);
-	// echo "<br>";
-	// var_dump($bis);
-	// echo "ALLO\n<br><br><br>";
-
-
-  return strtotime($date2) - strtotime($date1);
-}
-
-
-function date_sort($a, $b) {
-    return strtotime($b) - strtotime($a);
-}
 
 /**
 * Affichage des podcasts
@@ -185,7 +157,7 @@ function displayPodcasts($rss){
 * @param string $url -> url de l'article scientifique en question
 * @return string $link -> lien twitter
 **/
-function getTwitter($url){
+function getTwitterLink($url){
 		$html = new simple_html_dom();
 		$html->load_file($url);
 		//Parcours de tous les paragraphes du site web pour retrouver celui mentionnant le Thread Twitter
