@@ -70,8 +70,10 @@ Le bitrate standart du podcast est 128 kbps et il est en stereo (une impression 
 ###### 6. Réencodage
 
 En utilisant lame les deux commandes pour faire le réencodage demandé sont :
+
 -> -b 32 pour obtenir les 32 kbps demandés
 -> -m mode=m pour obtenir le mode mono au lieu de stereo
+
 Une impression d'ecran est jointe ainsi que les fichiers mp3 avant et après réencodage (14312-28.02.2020-ITEMA_22294516-1.mp3 (avant) et 14312-28.02.2020-ITEMA_22294516-1.mp3.mp3 (après)).
 
 ###### 7.
