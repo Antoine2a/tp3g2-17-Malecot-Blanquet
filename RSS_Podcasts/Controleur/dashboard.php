@@ -100,58 +100,6 @@ function displayPodcasts($RSS_list) {
 	}
 }
 
-
-/**
-* Affichage des podcasts
-* @param Feed $rss -> content of the rss
-**/
-function displayPodcasts($rss){
-
-	//Header Line
-	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th><th>Sources Twitter (via DOM)</th></tr>"); echo "\n\t";
-
-	$num_current_week = "Semaine numéro : "."00";//Initialisation numéro de la semaine
-	//Content - Each line correspond to a podcast
-	foreach ($rss->item as $item) {
-
-		$date = date('j.n.Y H:i', (int) $item->timestamp);
-		$title = htmlspecialchars($item->title);
-		$enclosure = $item->enclosure->attributes();
-		$mp3 = $enclosure['url']; //récupération de l'attribut "url"
-		// $link_twitter = getTwitter($item->link);
-		$link_twitter = "temporaire";
-
-		testMp3($mp3);
-
-		// BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
-		// https://www.sitepoint.com/parsing-xml-with-simplexml/
-		$namespacces = $item->getNamespaces(true);
-		$itunes = $item[0]->children($namespacces["itunes"]);
-		$duration = $itunes->duration;
-
-		//Intercalage hebdomadaire
-		$num_week_podcast = "Semaine numéro : ".date('W', (int) $item->timestamp);
-		if ($num_current_week!=$num_week_podcast){
-			printf("<tr>");
-			printf("<td class=\"week\" colspan=\"6\">".$num_week_podcast."</td>");
-			printf("</tr>"); echo "\n\t";
-			$num_current_week = $num_week_podcast;
-		}
-		printf("<tr>");	echo "\n\t\t";
-		printf("<td>".$date."</td>");	echo "\n\t\t";
-		printf("<td>".$title."</td>");	echo "\n\t\t";
-		printf("<td><audio controls preload='none' src=".$mp3."></audio></td>");	echo "\n\t\t";
-		printf("<td>".$duration."</td>");	echo "\n\t\t";
-		printf("<td><a href=\"$mp3\" download=\"Koala\">Download</a></td>");	echo "\n\t\t";
-		if ( !empty($link_twitter)){
-			echo("<td><a href=\"".$link_twitter."\">Lien Twitter</a></td>");	echo "\n\t";
-		} else {
-			printf("<td class=\"error\">Inexistant</td>");	echo "\n\t";
-		}
-		printf("</tr>");	echo "\n\t";
-	}
-}
-
 /**
 * Récupère le DOM d'une page Web
 * @param string $url -> url de l'article scientifique en question
