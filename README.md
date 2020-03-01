@@ -11,13 +11,12 @@ Quick Start
 
 **A:** Clonez-le et executez les fichiers php suivants :
 
-  * TMDB : `/TMDB/film.php`
-
-  + RSS_Podcasts:
-    * Tableaux des Podcasts : `/RSS_Podcasts/Vue/vueDashboard.php` (Liens Twitter en appuyant sur `Charger Ressources Twitter`)
-
-    * Tableaux des Podcasts - Vue Hebdomadaire : `/RSS_Podcasts/Vue/vueDashboardHebdo.php`
-    * Tableaux des Podcasts - Fusion de plusieurs Podcasts : `/RSS_Podcasts/Vue/vueDashboardMulti.php`
+  + TMDB : `/TMDB/film.php`
+  + RSS_Podcasts: `/RSS_Podcasts/Vue/vueDashboard.php`
+    * Tableaux des Podcasts : Vue Classique
+    * Tableaux des Podcasts : Vue Classique - MultiPodcasts
+    * Tableaux des Podcasts : Vue Classique - Liens Twitter
+    * Tableaux des Podcasts : Vue Hebdomaire
 
 :warning: Le répértoire `/old_versions` contient nos versions de dev du TP. Afin de progresser en PHP, nous avons décider de réaliser la majeur partie des questions de notre coté pour ensuite sélectionner les implémentations les plus cohérente dans les répertoires `/TMDB` et `/RSS_Podcasts`
 
@@ -68,6 +67,8 @@ Non implémenté : Choix du sujet d'approfondissement sur les **RSS_Podcasts**.
 ## Partie 2 - Analyse d'un flux RSS de podcast
 ### 1. Mise en jambes
 
+*Rédaction en cours - Mise à jour Dimanche 01 mars 23h53 (à rédiger avant LUNDI 10h !! (léger retard :c)*
+
 ###### 1. Tableau des podcasts
 
 
@@ -96,3 +97,5 @@ En utilisant lame les deux commandes pour faire le réencodage demandé sont :
 Une impression d'ecran est jointe ainsi que les fichiers mp3 avant et après réencodage (14312-28.02.2020-ITEMA_22294516-1.mp3 (avant) et 14312-28.02.2020-ITEMA_22294516-1.mp3.mp3 (après)).
 
 ###### 7.
+
+Partie DOM : getTwitterLink :  *Rédaction en cours*

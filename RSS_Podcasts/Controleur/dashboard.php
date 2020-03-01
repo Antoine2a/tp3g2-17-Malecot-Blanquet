@@ -48,7 +48,6 @@ function displayPodcasts($RSS_list, $loadLinksTwitter) {
 	Idée d'implémentation : 1. Insérer TOUS les items de chacuns des podcasts dans une même array.
 													2. Trier cette liste en fonction de la date de publication du podcast
 													3. Afficher les podcasts, un par un avec l'item courant. (le podcast courant)
-
 	*/
 	//Header Line
 	if ($loadLinksTwitter) {
