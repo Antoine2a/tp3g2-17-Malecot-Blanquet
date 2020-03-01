@@ -16,7 +16,7 @@ body {
 }
 
 .error {
-  color: #721E8B;
+  color: red;
   font-weight: bold;
 }
 

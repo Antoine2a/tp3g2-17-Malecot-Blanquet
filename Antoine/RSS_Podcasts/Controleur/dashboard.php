@@ -9,9 +9,124 @@ require_once('../vendor/dg/rss-php/src/Feed.php');
 **/
 function getRSS($url) {
 	$rss = Feed::loadRss($url);
-	Feed::$cacheDir = __DIR__ . '/tmp';
-	Feed::$cacheExpire = '5 hours';
+
+	if (empty(__DIR__ . '/tmp')) { //Gestion d'un cache des données - Nota : ne pas recréer un cache si il existe toujours
+		Feed::$cacheDir = __DIR__ . '/tmp';
+		Feed::$cacheExpire = '5 hours';
+	}
 	return $rss;
+}
+
+
+
+function testMp3($mp3){
+
+	//
+	// $tags = id3_get_tag($mp3);
+	// echo "ALLO";
+	// var_dump($tags);
+
+}
+
+function displayPodcastsMulti($rss1,$rss2,$rss3) {
+	//Header Line
+	printf("<tr class=\"header blue\"><th>Date</th><th>Titre</th><th>Player MP3</th><th>Durée</th><th>Media</th></tr>");
+
+	$RSS_list = array($rss1,$rss2,$rss3); //fusion des objets RSS
+	// $RSS_list = array($rss1); //fusion des objets RSS
+
+
+
+	//L'idée c'est : mettre tous les "items" dans une array
+	//Et trier sur la date de publication
+
+
+  $item_list = array();
+	$item_list_pubDate = array();
+
+	foreach ($RSS_list as $rss) {
+		foreach ($rss->item as $item) {
+			array_push($item_list, $item);
+		}
+	}
+	// var_dump($item_list);
+
+
+	foreach ($item_list as $item) {
+		array_push($item_list_pubDate,date('j.n.Y H:i', (int) $item->timestamp));
+	}
+
+
+	//trier toutes les dates
+	// usort($item_list_pubDate, "date_sort");
+
+	usort($item_list, "date_sort_modif");
+
+
+	//trier nos items en fonction des dates triées
+	// array_multisort($item_list,$item_list_pubDate);
+
+	// displayPodcasts($rss1);
+	// var_dump($item_list);
+
+
+	$num_current_week = "Semaine numéro : "."00";//Initialisation numéro de la semaine
+	//Content - Each line correspond to a podcast
+	foreach ($item_list as $item) {
+
+		$date = date('j.n.Y H:i', (int) $item->timestamp);
+		$title = htmlspecialchars($item->title);
+		$enclosure = $item->enclosure->attributes();
+		$mp3 = $enclosure['url']; //récupération de l'attribut "url"
+		// $link_twitter = getTwitter($item->link);
+
+		testMp3($mp3);
+
+		// BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
+		// https://www.sitepoint.com/parsing-xml-with-simplexml/
+		$namespacces = $item->getNamespaces(true);
+		$itunes = $item[0]->children($namespacces["itunes"]);
+		$duration = $itunes->duration;
+
+		//Intercalage hebdomadaire
+		$num_week_podcast = "Semaine numéro : ".date('W', (int) $item->timestamp);
+		if ($num_current_week!=$num_week_podcast){
+			printf("<tr>");
+			printf("<td class=\"week\" colspan=\"6\">".$num_week_podcast."</td>");
+			printf("</tr>"); echo "\n\t";
+			$num_current_week = $num_week_podcast;
+		}
+		printf("<tr>");	echo "\n\t\t";
+		printf("<td>".$date."</td>");	echo "\n\t\t";
+		printf("<td>".$title."</td>");	echo "\n\t\t";
+		printf("<td><audio controls preload='none' src=".$mp3."></audio></td>");	echo "\n\t\t";
+		printf("<td>".$duration."</td>");	echo "\n\t\t";
+		printf("<td><a href=\"$mp3\" download=\"Koala\">Download</a></td>");	echo "\n\t\t";
+		printf("</tr>");	echo "\n\t";
+	}
+
+
+
+
+}
+
+function date_sort_modif($d1, $d2) {
+
+	$date1 = date('j.n.Y H:i', (int) $d1->timestamp);
+	$date2 = date('j.n.Y H:i', (int) $d2->timestamp);
+
+	// var_dump($ais);
+	// echo "<br>";
+	// var_dump($bis);
+	// echo "ALLO\n<br><br><br>";
+
+
+  return strtotime($date2) - strtotime($date1);
+}
+
+
+function date_sort($a, $b) {
+    return strtotime($b) - strtotime($a);
 }
 
 /**
@@ -33,6 +148,8 @@ function displayPodcasts($rss){
 		$mp3 = $enclosure['url']; //récupération de l'attribut "url"
 		// $link_twitter = getTwitter($item->link);
 		$link_twitter = "temporaire";
+
+		testMp3($mp3);
 
 		// BLA-19/02/2020 : Tutoriel : Comment récupérer les données XML de type "<itunes:author>"
 		// https://www.sitepoint.com/parsing-xml-with-simplexml/
