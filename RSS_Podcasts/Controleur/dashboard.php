@@ -121,7 +121,6 @@ function getTwitterLink($url){
 		$html->load_file($url);
 		//Parcours de tous les paragraphes du site web pour retrouver celui mentionnant le Thread Twitter
 		foreach ($html->find('p') as $paragraph) {
-
 			if (strpos($paragraph, "[Thread]") == true) {
 				$link = htmlspecialchars($paragraph->find('a',0)->getAttribute('href'));
 				return $link;

@@ -43,6 +43,7 @@
             $rss1 = getRSS($url1);
             $rss2 = getRSS($url2);
             $rss3 = getRSS($url3);
+            printf("<td class=\"error\">Temps de Chargement assez long selon votre connexion internet.</td>");	echo "\n\t";
             $RSS_list = array($rss1,$rss2,$rss3); //fusion des podcasts RSS
             displayPodcasts($RSS_list,false);
             break;
@@ -59,7 +60,6 @@
             break;
         }
       }
-
       ?>
     </table>
   </div>
