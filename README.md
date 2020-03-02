@@ -172,4 +172,10 @@ $html->load_file($url);`
 
 ###### Q8. Liens twitter dans le mp3 Peut-on directement intégrer le lien vers le fil twitter dans le fichier mp3 considéré ? Quelles conventions et quelles limitations cela impose ?
 
-Implémentation non réussi : tests dans `Vue/testMP3.php`
+Implémentation non réussi : tests réalisés dans `Vue/testMP3.php` ..
+
+Utilisation de la bibliothèque ***getID3***
+
+###### Q9. Pour aller plus loin : API Twitter Twitter fournit une API web qui permet de récupérer et chercher des tweets de façon très puissante. Cependant une clé développeur et un mécanisme d’authentification forte rendent l’API Twitter trop complexe pour le cadre de ce TP. Mais vous pouvez vous y intéresser à titre personnel.
+
+Non implémenté.
