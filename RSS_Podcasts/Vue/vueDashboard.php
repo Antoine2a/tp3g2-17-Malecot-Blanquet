@@ -43,7 +43,6 @@
             $rss1 = getRSS($url1);
             $rss2 = getRSS($url2);
             $rss3 = getRSS($url3);
-            printf("<td class=\"error\">Temps de Chargement assez long selon votre connexion internet.</td>");	echo "\n\t";
             $RSS_list = array($rss1,$rss2,$rss3); //fusion des podcasts RSS
             displayPodcasts($RSS_list,false);
             break;
@@ -51,6 +50,7 @@
             $url_podcasts = "http://radiofrance-podcast.net/podcast09/rss_14312.xml";
             $rss = getRSS($url_podcasts);
             $RSS_list = array($rss); //displayPodcasts peut affiche plusieurs podcasts, il prend en paramètre un tableau de tous les podcasts rss possibles.
+            printf("<td class=\"error\" colspan=\"6\">Temps de Chargement assez long selon votre connexion internet.</td>");	echo "\n\t";
             displayPodcasts($RSS_list,true);
             break;
           case 'loadPodcasts_hebdo':
