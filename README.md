@@ -82,7 +82,7 @@ Affiche le contenu à l'utilisateur (podcasts) et transmet les commandes de l'ut
 Affichage des émissions d'un ou plusieurs podcasts avec la fonction `displayPodcasts()` disponible dans `dashboard.php`
 
 1.Récupération de données à partir du fichier au format RSS.
-```
+```php
 $date = date('j.n.Y H:i', (int) $item->timestamp);
 $title = htmlspecialchars($item->title);
 $enclosure = $item->enclosure->attributes();
@@ -92,7 +92,7 @@ $itunes = $item[0]->children($namespacces["itunes"]);
 $duration = $itunes->duration;
 ```
 2.Affichage des données dans un tableau html
-```
+```php
 printf("<tr>");
 printf("<td>".$date."</td>");
 printf("<td>".$title."</td>");
@@ -126,10 +126,10 @@ Pour la question 4, nous avons procéder en 3 étapes d'implémentations :
 3. Afficher les podcasts, un par un avec l'item courant. (le podcast courant)
 
 Pour l'étape 2 qui est la plus compliqué, nous avons utilisé la fonction `usort` de PHP, celle ci permet d'utiliser sa propre méthode de comparaison. En l'occurrence la comparaison d'une date par rapport à l'autre.
-```
+```php
 usort($item_list, "date_sort_modif");
 ```
-```
+```php
 //Fonction de comparaison pour des dates
 function date_sort_modif($d1, $d2) {
 	$date1 = date('j.n.Y H:i', (int) $d1->timestamp); //On récupère la date de publication de l'item
