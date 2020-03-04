@@ -18,6 +18,7 @@
       <option value="loadPodcasts_twitter">Afficher Podcasts (Liens Twitter)- Vue Classique</option>
       <option value="loadPodcasts_hebdo">Afficher Podcasts - Vue Hebdomaire</option>
     </select>
+    <p class="warning">&#x231B;Temps de chargement de l'affichage des podcasts avec les <strong>Liens Twitter</strong> assez long selon votre connexion internet.&#x231B;</p>
     <input type="submit" name="Valider Affichage"/><br><br>
   </form>
   <hr>
@@ -50,7 +51,6 @@
             $url_podcasts = "http://radiofrance-podcast.net/podcast09/rss_14312.xml";
             $rss = getRSS($url_podcasts);
             $RSS_list = array($rss); //displayPodcasts peut affiche plusieurs podcasts, il prend en paramètre un tableau de tous les podcasts rss possibles.
-            printf("<td class=\"error\" colspan=\"6\">Temps de Chargement assez long selon votre connexion internet.</td>");	echo "\n\t";
             displayPodcasts($RSS_list,true);
             break;
           case 'loadPodcasts_hebdo':
