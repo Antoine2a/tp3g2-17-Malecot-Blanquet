@@ -129,7 +129,7 @@ Pour l'étape 2 qui est la plus compliqué, nous avons utilisé la fonction `uso
 ```
 usort($item_list, "date_sort_modif");
 ```
-```
+```php
 //Fonction de comparaison pour des dates
 function date_sort_modif($d1, $d2) {
 	$date1 = date('j.n.Y H:i', (int) $d1->timestamp); //On récupère la date de publication de l'item
